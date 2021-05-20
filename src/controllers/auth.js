@@ -2,6 +2,7 @@ const User = require("../models/user");
 const jwt = require("jsonwebtoken");
 const { validationResult } = require("express-validator");
 const bcrypt = require("bcrypt");
+const shortid = require('shortid');
 
 exports.signup = (req, res) => {
   User.findOne({ email: req.body.email }).exec(async (error, user) => {
@@ -18,7 +19,7 @@ exports.signup = (req, res) => {
       lastName,
       email,
       hash_password,
-      username: Math.random().toString(),
+      username: shortid.generate(),
     });
 
     _user.save((error, data) => {
@@ -47,7 +48,7 @@ exports.signin = (req, res) => {
         const token = jwt.sign(
           { _id: user._id, role: user.role },
           process.env.JWT_SECRET,
-          { expiresIn: "1h" }
+          { expiresIn: "1d" }
         );
         const { _id, firstName, lastName, email, role, fullName } = user;
         res.status(200).json({
