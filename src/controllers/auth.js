@@ -44,7 +44,7 @@ exports.signin = (req, res) => {
       return response.status(400).json({ error });
     }
     if (user) {
-      if (user.authenticate(req.body.password)) {
+      if (user.authenticate(req.body.password)  && user.role === "user") {
         const token = jwt.sign(
           { _id: user._id, role: user.role },
           process.env.JWT_SECRET,
@@ -64,7 +64,7 @@ exports.signin = (req, res) => {
         });
       } else {
         return res.status(400).json({
-          message: "Incorrect password",
+          message: "Something went wrong",
         });
       }
     } else {
