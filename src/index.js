@@ -14,6 +14,7 @@ const productRoutes = require("./routes/product");
 const cartRoutes = require("./routes/cart");
 const pageRoutes = require("./routes/admin/page");
 const addressRoutes = require("./routes/address");
+const orderRoutes = require("./routes/order");
 
 // environment variables
 env.config();
@@ -44,6 +45,7 @@ app.use("/api", cartRoutes);
 app.use("/api", initialDataRoutes);
 app.use("/api", pageRoutes);
 app.use("/api", addressRoutes);
+app.use("/api", orderRoutes);
 
 app.listen(process.env.PORT, () => {
   console.log(`Server is running on port ${process.env.PORT}`);
